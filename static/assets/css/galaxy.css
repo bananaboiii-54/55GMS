@@ -1,0 +1,428 @@
+/* Galaxy Theme Styles */
+html.galaxy {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+html.galaxy::-webkit-scrollbar {
+  display: none;
+}
+
+html.galaxy body {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #000 !important;
+  color: #e0c3fc !important;
+  position: relative;
+}
+
+/* Galaxy Background Container */
+#galaxy-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, #2d1b4e 0%, #1a0f2e 30%, #0a0015 60%, #000 100%);
+}
+
+/* Animated stars/particles */
+.star {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+}
+
+.star.small {
+  width: 1px;
+  height: 1px;
+  box-shadow: 0 0 2px 1px rgba(224, 195, 252, 0.6);
+}
+
+.star.medium {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px 1px rgba(200, 150, 255, 0.8);
+}
+
+.star.large {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 6px 2px rgba(180, 100, 255, 1);
+}
+
+/* Rotating galaxy core */
+.galaxy-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  animation: rotateGalaxy 30s linear infinite;
+}
+
+.galaxy-disc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(40px);
+}
+
+.galaxy-disc.outer {
+  width: 600px;
+  height: 200px;
+  background: conic-gradient(from 0deg, rgba(200, 100, 255, 0.4), rgba(150, 50, 200, 0.4), rgba(200, 100, 255, 0.4));
+  animation: rotateGalaxy 40s linear infinite;
+}
+
+.galaxy-disc.middle {
+  width: 450px;
+  height: 150px;
+  background: conic-gradient(from 0deg, rgba(220, 150, 255, 0.5), rgba(180, 80, 220, 0.5), rgba(220, 150, 255, 0.5));
+  animation: rotateGalaxy 25s linear infinite;
+}
+
+.galaxy-disc.inner {
+  width: 300px;
+  height: 100px;
+  background: conic-gradient(from 0deg, rgba(240, 180, 255, 0.6), rgba(200, 100, 255, 0.6), rgba(240, 180, 255, 0.6));
+  animation: rotateGalaxy 20s linear infinite reverse;
+}
+
+.galaxy-core-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255, 200, 255, 0.8), rgba(150, 50, 200, 0.4), transparent);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+/* Floating nebula clouds */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.2;
+}
+
+.nebula.purple {
+  background: radial-gradient(circle, rgba(180, 50, 220, 0.6), transparent);
+}
+
+.nebula.pink {
+  background: radial-gradient(circle, rgba(220, 100, 200, 0.6), transparent);
+}
+
+.nebula.blue {
+  background: radial-gradient(circle, rgba(100, 150, 255, 0.6), transparent);
+}
+
+.nebula.n1 {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: 10%;
+  animation: floatNebula 20s ease-in-out infinite;
+}
+
+.nebula.n2 {
+  width: 250px;
+  height: 250px;
+  top: 30%;
+  right: 5%;
+  animation: floatNebula 25s ease-in-out infinite reverse;
+}
+
+.nebula.n3 {
+  width: 200px;
+  height: 200px;
+  bottom: -50px;
+  left: 30%;
+  animation: floatNebula 22s ease-in-out infinite;
+}
+
+.nebula.n4 {
+  width: 280px;
+  height: 280px;
+  top: 40%;
+  right: 15%;
+  animation: floatNebula 18s ease-in-out infinite reverse;
+}
+
+/* Content wrapper for proper layering */
+html.galaxy main,
+html.galaxy nav,
+html.galaxy h1,
+html.galaxy form,
+html.galaxy .quicklinks,
+html.galaxy .info,
+html.galaxy div {
+  position: relative;
+  z-index: 10;
+}
+
+html.galaxy .navbar {
+  background: rgba(20, 10, 40, 0.2) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(200, 100, 255, 0.3);
+}
+
+html.galaxy .navbar a {
+  color: #e0c3fc !important;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+html.galaxy .navbar a:hover {
+  background: rgba(30, 15, 60, 0.15);
+  border: 1px solid rgba(200, 100, 255, 0.4);
+  color: #ff6ec7 !important;
+  opacity: 0.9;
+  box-shadow: 0 0 12px rgba(200, 100, 255, 0.3) inset;
+}
+
+html.galaxy #titles {
+  color: #e0c3fc !important;
+  text-shadow: 0 0 20px rgba(200, 100, 255, 0.5);
+}
+
+html.galaxy #sub {
+  color: #b89dff !important;
+  text-shadow: 0 0 10px rgba(180, 100, 255, 0.3);
+}
+
+html.galaxy a {
+  color: #d8bfd8 !important;
+  text-decoration: none;
+}
+
+html.galaxy a:hover {
+  color: #ff6ec7 !important;
+  text-shadow: 0 0 10px rgba(255, 110, 199, 0.5);
+}
+
+html.galaxy .card {
+  background-color: rgba(30, 15, 60, 0.15) !important;
+  color: #e0c3fc !important;
+  border: 1px solid rgba(200, 100, 255, 0.2);
+  backdrop-filter: blur(20px);
+}
+
+html.galaxy input[type="text"],
+html.galaxy input[type="color"],
+html.galaxy input[type="file"],
+html.galaxy select {
+  background-color: rgba(40, 20, 80, 0.2) !important;
+  color: #e0c3fc !important;
+  border: 1px solid rgba(200, 100, 255, 0.3) !important;
+  backdrop-filter: blur(15px);
+}
+
+html.galaxy input[type="text"]::placeholder {
+  color: rgba(224, 195, 252, 0.5);
+}
+
+/* Search bar styling */
+html.galaxy .searchbar {
+  margin: 20px auto;
+}
+
+html.galaxy .form__input,
+html.galaxy .searchbar input {
+  background-color: rgba(40, 20, 80, 0.2) !important;
+  color: #e0c3fc !important;
+  border: 1px solid rgba(200, 100, 255, 0.3) !important;
+  backdrop-filter: blur(15px);
+  padding: 12px 20px !important;
+  font-size: 16px !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(200, 100, 255, 0.1) inset;
+}
+
+html.galaxy .form__input:focus,
+html.galaxy .searchbar input:focus {
+  outline: none;
+  background-color: rgba(40, 20, 80, 0.35) !important;
+  border: 1px solid rgba(200, 100, 255, 0.6) !important;
+  box-shadow: 0 0 20px rgba(200, 100, 255, 0.4), inset 0 0 15px rgba(200, 100, 255, 0.1);
+}
+
+html.galaxy .form__input::placeholder,
+html.galaxy .searchbar input::placeholder {
+  color: rgba(224, 195, 252, 0.5) !important;
+}
+
+/* Info buttons styling */
+html.galaxy .infobtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  margin: 10px;
+  border-radius: 8px;
+  background: rgba(30, 15, 60, 0.2);
+  border: 2px solid rgba(200, 100, 255, 0.3);
+  color: #e0c3fc !important;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 15px rgba(200, 100, 255, 0.1) inset;
+  text-decoration: none;
+}
+
+html.galaxy .infobtn:hover {
+  background: rgba(30, 15, 60, 0.4);
+  border: 2px solid rgba(200, 100, 255, 0.6);
+  color: #ff6ec7 !important;
+  box-shadow: 0 0 20px rgba(200, 100, 255, 0.5), 0 0 30px rgba(255, 110, 199, 0.4), inset 0 0 15px rgba(200, 100, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Nav bar text selection */
+html.galaxy *::selection {
+  background: rgba(200, 100, 255, 0.3);
+  color: #e0c3fc;
+}
+
+html.galaxy *::-moz-selection {
+  background: rgba(200, 100, 255, 0.3);
+  color: #e0c3fc;
+}
+
+html.galaxy .quicklinks {
+  position: relative;
+}
+
+html.galaxy .quicklink {
+  filter: drop-shadow(0 0 8px rgba(200, 100, 255, 0.4));
+  transition: filter 0.3s ease;
+}
+
+html.galaxy .quicklink:hover {
+  filter: drop-shadow(0 0 16px rgba(255, 110, 199, 0.6));
+}
+
+/* Game and App card glow effects */
+html.galaxy .game {
+  transition: filter 0.3s ease;
+}
+
+html.galaxy .game:hover {
+  filter: drop-shadow(0 0 16px rgba(200, 100, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 110, 199, 0.4));
+}
+
+html.galaxy .game img {
+  transition: filter 0.3s ease;
+}
+
+html.galaxy .game:hover img {
+  filter: brightness(1.2) drop-shadow(0 0 12px rgba(255, 110, 199, 0.5));
+}
+
+/* Media card glow effects */
+html.galaxy .card {
+  transition: filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.galaxy .card:hover {
+  filter: drop-shadow(0 0 16px rgba(200, 100, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 110, 199, 0.4));
+  box-shadow: inset 0 0 20px rgba(200, 100, 255, 0.2);
+}
+
+html.galaxy .card img {
+  transition: filter 0.3s ease;
+}
+
+html.galaxy .card:hover img {
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(200, 100, 255, 0.5));
+}
+
+/* Loading bar translucency */
+html.galaxy .loading-container {
+  background: rgba(20, 10, 40, 0.1) !important;
+  backdrop-filter: blur(10px);
+}
+
+html.galaxy .progress-bar {
+  background: linear-gradient(90deg, rgba(200, 100, 255, 0.8), rgba(255, 110, 199, 0.8)) !important;
+  box-shadow: 0 0 10px rgba(200, 100, 255, 0.6), 0 0 20px rgba(255, 110, 199, 0.4) !important;
+}
+
+html.galaxy img {
+  opacity: 0.85;
+}
+
+/* Game, App, and Media card images */
+html.galaxy #game-container img,
+html.galaxy #app-container img,
+html.galaxy #movie-container img,
+html.galaxy #tv-container img,
+html.galaxy .game-card img,
+html.galaxy .app-card img,
+html.galaxy .media-card img {
+  opacity: 0.85 !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Animations */
+@keyframes rotateGalaxy {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 200, 255, 0.6), 0 0 40px rgba(150, 50, 200, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 200, 255, 0.8), 0 0 60px rgba(150, 50, 200, 0.5);
+  }
+}
+
+@keyframes floatNebula {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -30px);
+  }
+}
+
+@keyframes twinkleStar {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.star.twinkle {
+  animation: twinkleStar 3s ease-in-out infinite;
+}
