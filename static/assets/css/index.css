@@ -10,6 +10,10 @@
   padding-top: 2vh;
 }
 
+body.meatworm #titles {
+  color: #000000;
+}
+
 #sub {
   font-size: 17px;
   color: #b5cae0;
@@ -17,6 +21,10 @@
   font-family: "Roboto", serif;
   text-align: center;
   cursor: pointer;
+}
+
+body.meatworm #sub {
+  color: #555555;
 }
 
 .form__input {

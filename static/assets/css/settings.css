@@ -25,6 +25,33 @@
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
+body.meatworm .card {
+  background-color: #e8e8e8;
+  color: #000;
+}
+
+body.meatworm .tab-cloaker-form {
+  background-color: #d0d0d0;
+  color: #000;
+}
+
+body.meatworm .tab-cloaker-form::placeholder {
+  color: #333;
+}
+
+body.meatworm select,
+body.meatworm input[type="text"],
+body.meatworm input[type="color"],
+body.meatworm input[type="file"] {
+  background-color: #fff;
+  color: #000;
+}
+
+body.meatworm .tab-cloak {
+  background-color: #555;
+  color: white;
+}
+
 .card:hover {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.08),
     0 17px 50px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.12),

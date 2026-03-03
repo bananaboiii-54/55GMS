@@ -13,6 +13,36 @@
     <meta name="author" content="Rednotsus" />
     <meta http-equiv="Cache-control" content="public">
     <meta charset="utf-8">
+    <script>
+      (function() {
+        const mode = localStorage.getItem('themeMode') || 'original';
+        const customColor = localStorage.getItem('customColor');
+        if (mode === 'meatworm') {
+          document.documentElement.classList.add('meatworm');
+          const st = document.createElement('style');
+          st.innerHTML = 'body{background-color:#fff!important;color:#000!important}.navbar{background:#fff!important}.navbar a{color:#000!important}a{color:#0033cc!important}';
+          document.head.appendChild(st);
+          document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.getElementById('nav-title');
+            if (nav) nav.textContent = 'Evil Meatworm Games';
+            if (!localStorage.getItem('tab')) {
+              document.title = 'Evil Meatworm Games';
+            }
+          });
+        } else if (mode === 'custom' && customColor) {
+          const c = customColor.replace('#', '');
+          const r = parseInt(c.substr(0, 2), 16);
+          const g = parseInt(c.substr(2, 2), 16);
+          const b = parseInt(c.substr(4, 2), 16);
+          const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+          const st = document.createElement('style');
+          const txt = brightness > 128 ? '#000' : '#fff';
+          const lnk = brightness > 128 ? '#0033cc' : '#f1a727';
+          st.innerHTML = 'body{background-color:' + customColor + '!important;color:' + txt + '!important}a{color:' + lnk + '!important}';
+          document.head.appendChild(st);
+        }
+      })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="description" content="55GMS - Reds Exploit Corner - Join the discord for links!" />
 

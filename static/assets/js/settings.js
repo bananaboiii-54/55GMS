@@ -173,6 +173,54 @@ document.addEventListener("DOMContentLoaded", function () {
       toggle.checked = false;
     }
   });
+
+  // theme selector and optional custom color
+  const themeSelect = document.getElementById("theme-select");
+  const customContainer = document.getElementById("custom-color-container");
+  const customColorInput = document.getElementById("custom-color");
+
+  // load stored values
+  const storedTheme = localStorage.getItem("themeMode") || "original";
+  const storedColor = localStorage.getItem("customColor") || "#ffffff";
+
+  if (themeSelect) {
+    themeSelect.value = storedTheme;
+  }
+  if (customColorInput) {
+    customColorInput.value = storedColor;
+  }
+  if (customContainer) {
+    customContainer.style.display = storedTheme === "custom" ? "block" : "none";
+  }
+
+  function updateThemeMode(mode) {
+    localStorage.setItem("themeMode", mode);
+    if (mode === "custom") {
+      if (customContainer) customContainer.style.display = "block";
+    } else {
+      if (customContainer) customContainer.style.display = "none";
+    }
+    if (typeof applyTheme === "function") applyTheme();
+  }
+
+  if (themeSelect) {
+    const saveSelect = () => updateThemeMode(themeSelect.value);
+    themeSelect.addEventListener("change", saveSelect);
+    themeSelect.addEventListener("input", saveSelect);
+    // also save on page unload in case change event didn't fire
+    window.addEventListener('beforeunload', function() {
+      if (themeSelect && themeSelect.value) {
+        localStorage.setItem('themeMode', themeSelect.value);
+      }
+    });
+  }
+  if (customColorInput) {
+    customColorInput.addEventListener("input", function () {
+      const c = customColorInput.value;
+      localStorage.setItem("customColor", c);
+      if (typeof applyTheme === "function") applyTheme();
+    });
+  }
 });
 
 function setPanicKey() {

@@ -7,9 +7,41 @@
   <meta http-equiv="Cache-control" content="public">
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2" />
   <link rel="stylesheet" href="/assets/css/nav.css?v=3" />
-  <script src="/assets/js/settings.js?v=4"></script>
   <link rel="stylesheet" href="/assets/css/settings.css?v=2" />
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+  <script>
+    (function() {
+      const mode = localStorage.getItem('themeMode') || 'original';
+      const customColor = localStorage.getItem('customColor');
+      if (mode === 'meatworm') {
+        document.documentElement.classList.add('meatworm');
+        const st = document.createElement('style');
+        st.innerHTML = 'body{background-color:#fff!important;color:#000!important}.navbar{background:#fff!important}.navbar a{color:#000!important}.card{background-color:#e8e8e8!important;color:#000!important}select,input[type="text"],input[type="color"],input[type="file"]{background-color:#fff!important;color:#000!important}.tab-cloaker-form{background-color:#d0d0d0!important;color:#000!important}.tab-cloak{background-color:#555!important;color:#fff!important}a{color:#0033cc!important}';
+        document.head.appendChild(st);
+        document.addEventListener('DOMContentLoaded', function() {
+          const title = document.getElementById('titles');
+          if (title) title.textContent = 'Evil Meatworm Games';
+          const nav = document.getElementById('nav-title');
+          if (nav) nav.textContent = 'Evil Meatworm Games';
+          if (!localStorage.getItem('tab')) {
+            document.title = 'Evil Meatworm Games';
+          }
+        });
+      } else if (mode === 'custom' && customColor) {
+        const c = customColor.replace('#', '');
+        const r = parseInt(c.substr(0, 2), 16);
+        const g = parseInt(c.substr(2, 2), 16);
+        const b = parseInt(c.substr(4, 2), 16);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        const st = document.createElement('style');
+        const txt = brightness > 128 ? '#000' : '#fff';
+        const lnk = brightness > 128 ? '#0033cc' : '#f1a727';
+        st.innerHTML = 'body{background-color:' + customColor + '!important;color:' + txt + '!important}a{color:' + lnk + '!important}.card{background-color:' + customColor + '!important;color:' + txt + '!important}';
+        document.head.appendChild(st);
+      }
+    })();
+  </script>
+  <script src="/assets/js/settings.js?v=4"></script>
   <script src="/assets/js/font.js" crossorigin="anonymous"></script>
   <script src="/assets/js/easteregg.min.js" async></script>
   <script src="/assets/js/script.js?v=14"></script>
@@ -19,7 +51,7 @@
 <body>
   <nav>
     <div class="navbar">
-      <a class="title" href="/">Reds Exploit Corner</a>
+      <a id="nav-title" class="title" href="/">Reds Exploit Corner</a>
       <a href="/g"><i class="fa-solid fa-gamepad">&nbsp;</i>Games</a>
       <a href="/a"><i class="fa-solid fa-box-archive">&nbsp;</i>Apps</a>
       <a href="/-"><i class="fa-solid fa-tv">&nbsp;</i>Media</a>
@@ -42,6 +74,25 @@
               <span class="slider round"></span>
             </label><br><br>
             <button onclick="cloak()" class="cloak center-global tab-cloak tabcloak">Open Popup</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="container">
+          <div class="title">
+            <h4><b>Themes</b></h4>
+          </div>
+          <div>
+            <label for="theme-select">Theme:</label><br>
+            <select id="theme-select">
+              <option value="original">Default (blue)</option>
+              <option value="meatworm">Meatworm</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div id="custom-color-container" style="display: none; margin-top: 8px;">
+            <label for="custom-color">Background color:</label><br>
+            <input type="color" id="custom-color" />
           </div>
         </div>
       </div>
