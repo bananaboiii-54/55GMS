@@ -17,6 +17,7 @@ function applyTheme() {
     st.setAttribute('data-theme-style', 'true');
     st.innerHTML = 'body{background-color:#fff!important;color:#000!important}.navbar{background:#fff!important}.navbar a{color:#000!important}a{color:#0033cc!important}';
     document.head.appendChild(st);
+    applyContainerOverwrite('#fff', '#000');
     const nav = document.getElementById('nav-title');
     if (nav) nav.textContent = 'Evil Meatworm Games';
     if (!localStorage.getItem('tab')) {
@@ -34,10 +35,33 @@ function applyTheme() {
     const lnk = brightness > 128 ? '#0033cc' : '#f1a727';
     st.innerHTML = 'body{background-color:' + customColor + '!important;color:' + txt + '!important}a{color:' + lnk + '!important}';
     document.head.appendChild(st);
+    applyContainerOverwrite(customColor, txt);
   } else if (mode === 'galaxy') {
     html.classList.add('galaxy');
+    applyContainerOverwrite('rgba(0,0,0,0)', '#e0c3fc');
   }
   // 'original' doesn't need any special styling
+
+  // helper for patching backgrounds on game/app/movie containers that
+  // otherwise draw their own color.  We cannot theme content inside
+  // cross-domain iframes, but we can at least colour the wrapper.
+  function applyContainerOverwrite(bg, color) {
+    const css = `
+      /* common wrappers and any element with game/movie/tv in id/class */
+      #gameframe, .gameDisplay, .game, iframe, canvas,
+      .movie, .tv, #game-container, #movie-container, #tv-container,
+      [id*="game"], [class*="game"],
+      [id*="movie"], [class*="movie"],
+      [id*="tv"], [class*="tv"] {
+        background: ${bg} !important;
+        color: ${color} !important;
+      }
+    `;
+    const st = document.createElement('style');
+    st.setAttribute('data-theme-style','true');
+    st.innerHTML = css;
+    document.head.appendChild(st);
+  }
 }
 
 // Run theme on page load if DOM is ready
