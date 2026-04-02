@@ -174,14 +174,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // theme selector and optional custom color
+  // theme selector and custom color support with an explicit apply
+  // button.  The page itself will not switch themes while browsing the
+  // dropdown (no auto-switching); only the button will reflect the choice.
   const themeSelect = document.getElementById("theme-select");
   const customContainer = document.getElementById("custom-color-container");
   const customColorInput = document.getElementById("custom-color");
+  const applyBtn = document.getElementById("apply-theme");
 
-  // load stored values
+  // stored values (current applied theme/color)
   const storedTheme = localStorage.getItem("themeMode") || "original";
   const storedColor = localStorage.getItem("customColor") || "#ffffff";
+
+  // pending values waiting for confirmation
+  let pendingTheme = storedTheme;
+  let pendingColor = storedColor;
 
   if (themeSelect) {
     themeSelect.value = storedTheme;
@@ -193,32 +200,82 @@ document.addEventListener("DOMContentLoaded", function () {
     customContainer.style.display = storedTheme === "custom" ? "block" : "none";
   }
 
-  function updateThemeMode(mode) {
-    localStorage.setItem("themeMode", mode);
-    if (mode === "custom") {
-      if (customContainer) customContainer.style.display = "block";
-    } else {
-      if (customContainer) customContainer.style.display = "none";
+  // style the apply button according to the currently applied theme and
+  // determine whether it should be visible initially.
+  styleApplyButton(storedTheme, storedColor);
+  showApplyButton();
+
+  // The apply button is now always visible and styled statically; we no
+  // longer manipulate its appearance per-selection.
+  // (Leftover helper preserved in case future behaviour changes but never
+  // invoked.)
+  function styleApplyButton(theme, color) {
+    if (!applyBtn) return;
+    applyBtn.classList.remove("meatworm", "galaxy");
+    applyBtn.style.background = "";
+    applyBtn.style.color = "";
+    switch (theme) {
+      case "meatworm":
+        applyBtn.classList.add("meatworm");
+        break;
+      case "galaxy":
+        applyBtn.classList.add("galaxy");
+        applyBtn.style.background = "rgba(30,15,60,0.8)";
+        applyBtn.style.color = "#e0c3fc";
+        break;
+      case "custom":
+        if (color) {
+          applyBtn.style.background = color;
+          const c = color.replace("#", "");
+          const r = parseInt(c.substr(0, 2), 16);
+          const g = parseInt(c.substr(2, 2), 16);
+          const b = parseInt(c.substr(4, 2), 16);
+          const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+          applyBtn.style.color = brightness > 128 ? "#000" : "#fff";
+        }
+        break;
+      default:
+        break;
     }
-    if (typeof applyTheme === "function") applyTheme();
+  }
+
+  function showApplyButton() {
+    if (!applyBtn) return;
+    const needsApply =
+      pendingTheme !== storedTheme ||
+      (pendingTheme === "custom" && pendingColor !== storedColor);
+    applyBtn.style.display = needsApply ? "inline-block" : "none";
+    styleApplyButton(pendingTheme, pendingColor);
   }
 
   if (themeSelect) {
-    const saveSelect = () => updateThemeMode(themeSelect.value);
-    themeSelect.addEventListener("change", saveSelect);
-    themeSelect.addEventListener("input", saveSelect);
-    // also save on page unload in case change event didn't fire
-    window.addEventListener('beforeunload', function() {
-      if (themeSelect && themeSelect.value) {
-        localStorage.setItem('themeMode', themeSelect.value);
-      }
+    themeSelect.addEventListener("change", function () {
+      pendingTheme = themeSelect.value;
+      if (customContainer)
+        customContainer.style.display = pendingTheme === "custom" ? "block" : "none";
+      showApplyButton();
+    });
+    themeSelect.addEventListener("input", function () {
+      pendingTheme = themeSelect.value;
+      if (customContainer)
+        customContainer.style.display = pendingTheme === "custom" ? "block" : "none";
+      showApplyButton();
     });
   }
   if (customColorInput) {
     customColorInput.addEventListener("input", function () {
-      const c = customColorInput.value;
-      localStorage.setItem("customColor", c);
-      if (typeof applyTheme === "function") applyTheme();
+      pendingColor = customColorInput.value;
+      showApplyButton();
+    });
+  }
+
+  if (applyBtn) {
+    applyBtn.addEventListener("click", function () {
+      localStorage.setItem("themeMode", pendingTheme);
+      if (pendingTheme === "custom") {
+        localStorage.setItem("customColor", pendingColor);
+      }
+      location.reload();
     });
   }
 });
